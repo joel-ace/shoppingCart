@@ -47,14 +47,19 @@ shoppingCart.prototype = {
 };
 
 // Inherit the shoppingCart Object
-var Shop = new shoppingCart();
+function Shop(){
+	shoppingCart.call(this);
+}
 
-Shop.newShop = function(shopName, shopAddress, openingTime, closingTime){
+Shop.prototype = Object.create(shoppingCart.prototype);
+Shop.prototype.constructor = Shop;
+
+Shop.prototype.newShop = function(shopName, shopAddress, openingTime, closingTime) {
 	this.openingTime = openingTime;
 	this.closingTime = closingTime;
 	return "You created a new shop named '" + shopName + "' located at '" + shopAddress + "'";
-}
-Shop.workingHours = function(){
+};
+Shop.prototype.workingHours = function(){
 	var currentDate = new Date();
 	if(currentDate.getHours() >= this.openingTime){
 		return "We are currently Open";
